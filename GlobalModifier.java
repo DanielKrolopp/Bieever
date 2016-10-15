@@ -11,5 +11,5 @@ public abstract class GlobalModifier {
         return newImg;
     }
     
-    public abstract int modifyPixel(int pixel, float factor);
+    protected abstract int modifyPixel(int pixel, float factor);
 }
