@@ -2,9 +2,10 @@
  *
  * @author Kevin
  * 
+ * The name is terrible. It does not process images.
  * Contains lots of helpful methods.
  */
-public class ImageProcessor {
+public class ImageHelper {
     
     
     public static int[] toByteData(int value) {
