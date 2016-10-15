@@ -31,7 +31,7 @@ public class GaussianBlur extends GlobalModifier {
             int x = p % img.width, y = p / img.width;
             double rSum = 0, gSum = 0, bSum = 0; 
             for (int i = 0; i < matrixSize; i++) {
-                int[] channels = ImageProcessor.toByteData(img.pixels[img.width * y + i]);
+                int[] channels = ImageHelper.toByteData(img.pixels[img.width * y + i]);
                 int deltaX = i - origin;
                 if (x + deltaX < 0 || x + deltaX >= img.width) {
                 } else {
@@ -41,17 +41,17 @@ public class GaussianBlur extends GlobalModifier {
                     
                 }
             }
-            int[] newChannels = ImageProcessor.toByteData(img.pixels[p]);
-            newChannels[1] = ImageProcessor.clamp(rSum);
-            newChannels[2] = ImageProcessor.clamp(gSum);
-            newChannels[3] = ImageProcessor.clamp(bSum);
-            newPixels[p] = ImageProcessor.fromByteData(newChannels);
+            int[] newChannels = ImageHelper.toByteData(img.pixels[p]);
+            newChannels[1] = ImageHelper.clamp(rSum);
+            newChannels[2] = ImageHelper.clamp(gSum);
+            newChannels[3] = ImageHelper.clamp(bSum);
+            newPixels[p] = ImageHelper.fromByteData(newChannels);
         }
         for (int p = 0; p < img.pixels.length; p++) {
             int x = p % img.width, y = p / img.width;
             double rSum = 0, gSum = 0, bSum = 0; 
             for (int i = 0; i < matrixSize; i++) {
-                int[] channels = ImageProcessor.toByteData(img.pixels[i * img.width + x]);
+                int[] channels = ImageHelper.toByteData(img.pixels[i * img.width + x]);
                 int deltaY = i - origin;
                 if (x + deltaY < 0 || x + deltaY >= img.height) {
                 } else {
@@ -61,11 +61,11 @@ public class GaussianBlur extends GlobalModifier {
                     
                 }
             }
-            int[] newChannels = ImageProcessor.toByteData(img.pixels[p]);
-            newChannels[1] = ImageProcessor.clamp(rSum);
-            newChannels[2] = ImageProcessor.clamp(gSum);
-            newChannels[3] = ImageProcessor.clamp(bSum);
-            newPixels[p] = ImageProcessor.fromByteData(newChannels);
+            int[] newChannels = ImageHelper.toByteData(img.pixels[p]);
+            newChannels[1] = ImageHelper.clamp(rSum);
+            newChannels[2] = ImageHelper.clamp(gSum);
+            newChannels[3] = ImageHelper.clamp(bSum);
+            newPixels[p] = ImageHelper.fromByteData(newChannels);
         }
         
         
