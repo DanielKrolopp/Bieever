@@ -1,4 +1,3 @@
-
 /**
 *
 * @author Kevin
@@ -44,7 +43,7 @@ public class Image {
 	   int i = 0;
 	   for(int r = 0; r < img2D.length; r++){
 		   for(int c = 0; c < img2D[0].length; c++){
-			   if(c < greaterX && c > lesserX && r < greaterY && r > lesserY){
+			   if(c < greaterX && c >= lesserX && r < greaterY && r >= lesserY){
 				   croppedPixels[i] = (img2D[r][c]);
 				   i++;
 			   }
