@@ -18,6 +18,7 @@ public class View extends JFrame implements ActionListener{
 		private ArrayList<JSlider> sliders;
 		private JButton uploadPre;
 		private JPanel toolsPanel;
+		private JPanel container;
 		
 		public View()
 		{
@@ -31,7 +32,7 @@ public class View extends JFrame implements ActionListener{
 			setSize(screenWidth, screenHeight);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setLayout(new BorderLayout());
-			JPanel container = new JPanel();
+			container = new JPanel();
 			container.setLayout(new GridLayout(1,2));
 			
 			imagePanel = new PicPanel();
@@ -52,13 +53,14 @@ public class View extends JFrame implements ActionListener{
 			options.add(file);
 			setJMenuBar(options);
 			
+			//----------makes a tools panel and adds buttons---------------------------
 			toolsPanel = new JPanel();
 			toolsPanel.setBounds(0, 0, screenWidth/2, screenHeight);
 			toolsPanel.setLayout(null);
 			
 			int vertAlignment = 50;
-			int horizAlignment = toolsPanel.getWidth()/2;
-			
+			int horizAlignment = toolsPanel.getWidth()/2;			
+
 			uploadPre = new JButton("Upload Preset");
 			uploadPre.setBounds(horizAlignment, screenHeight-500, 140, 30);
 			uploadPre.addActionListener(this);
@@ -83,7 +85,6 @@ public class View extends JFrame implements ActionListener{
 			sliders = new ArrayList<JSlider>();
 			
 			String[] sliderNames = {"Red", "Green", "Blue", "Brightness", "Saturation", "Sharpness", "Blur"};
-
 			
 			for(int i = 0; i < 7; i++)
 			{
@@ -102,8 +103,6 @@ public class View extends JFrame implements ActionListener{
 				
 				vertAlignment += 70;
 			}
-			repaint();
-			
 			
 			//-----------adds to the JFrame---------------------
 			container.add(imagePanel);
@@ -126,15 +125,23 @@ public class View extends JFrame implements ActionListener{
 				try
 				{
 					image = ImageIO.read(currentFile);
+					int boxWidth = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2);
+					int boxHeight = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 					
-					Image temp = image.getScaledInstance((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()), Image.SCALE_DEFAULT);
-					BufferedImage newImage = new BufferedImage((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()), BufferedImage.TYPE_INT_ARGB);
+					if(image.getWidth() > boxWidth && image.getHeight() > boxHeight)
+					{
+						image = (BufferedImage) newImage(boxWidth, boxHeight);
+					}
 					
-					Graphics2D g2d = newImage.createGraphics();
-					g2d.drawImage(temp, 0, 0, null);
-					g2d.dispose();
+					else if(image.getWidth() > boxWidth)
+					{
+						image = (BufferedImage) newImage(boxWidth, image.getHeight());
+					}
 					
-					image = newImage;
+					else if(image.getHeight() > boxHeight)
+					{
+						image = (BufferedImage) newImage(image.getWidth(), boxHeight);
+					}
 					
 					width = image.getWidth();
 					height = image.getHeight();
@@ -144,6 +151,18 @@ public class View extends JFrame implements ActionListener{
 					System.out.println("Cannot read in that file");
 					System.exit(0);
 				}
+			}
+			
+			public Image newImage(int newWidth, int newHeight)
+			{
+				Image temp = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+				BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+				
+				Graphics2D g2d = newImage.createGraphics();
+				g2d.drawImage(temp, 0, 0, null);
+				g2d.dispose();
+				
+				return newImage;
 			}
 			
 			public Dimension getPreferredSize()
@@ -225,14 +244,13 @@ public class View extends JFrame implements ActionListener{
 						
 				fileName = currentFile.getName();
 				
-				remove(imagePanel);
+				container.removeAll();
 				imagePanel = null;
 				imagePanel = new PicPanel();
-				imagePanel.setLayout(null);
 	
-				add(imagePanel);
+				container.add(imagePanel);
+				container.add(toolsPanel);
 				setVisible(true);
-				repaint();
 			
 				setTitle("BIE-EVER ----------- " + fileName);
 			}
