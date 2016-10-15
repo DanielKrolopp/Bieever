@@ -1,4 +1,3 @@
-package io.github.dkrolls.Bieever;
 
 /**
 *
@@ -18,14 +17,13 @@ public class Image {
 	 * @param		x2  x-coordinate of an opposing corner
 	 * @param		y1  y-coordinate of an opposing corner
 	 * @param		y2  y-coordinate of an opposing corner
-	 * @param		img instance of Kevin's Image to be cropped
 	 * 
 	 * @return      Image
 	 * @see         Image
 	 */
-   public Image crop(Image img, int x1, int y1, int x2, int y2){
+   public Image crop(int x1, int y1, int x2, int y2){
 	   int greaterX, lesserX, greaterY, lesserY;
-	   int[][] img2D = ImageHelper.to2DArray(img);
+	   int[][] img2D = ImageHelper.to2DArray(this);
 	   if(x1 > x2){
 		   greaterX = x1;
 		   lesserX = x2;
@@ -54,7 +52,7 @@ public class Image {
 	   }
 	   Image output = new Image(greaterX - lesserX, greaterY - lesserY);
 	   output.setPixels(croppedPixels);
-	   return img;
+	   return output;
    }
    
    public int getHeight(){
