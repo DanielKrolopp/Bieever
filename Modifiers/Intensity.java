@@ -9,7 +9,7 @@ public class Intensity extends GlobalModifier {
         byte[] pixelData = ImageHelper.toByteData(pixel);
         for (int b = 1; b < pixelData.length; b++) {
             int value = (int) (pixelData[b] * factor);
-            pixelData[b] = (byte) (value > Byte.MAX_VALUE ? Byte.MAX_VALUE : value);
+            pixelData[b] = ImageHelper.clamp(value);
         }
         pixelValue = ImageHelper.fromByteData(pixelData);
         return pixelValue;
