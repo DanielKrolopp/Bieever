@@ -10,4 +10,11 @@ public class Image {
     }
     public int height, width;
     public int[] pixels;
+    
+    public int getHeight() {
+        return height;
+    }
+    public int getWidth() {
+        return width;
+    }
 }
