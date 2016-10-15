@@ -9,7 +9,7 @@ public class BlueIntensity extends Intensity {
         int[] pixelData = ImageHelper.toByteData(pixel);
         
         int value = (int) (pixelData[1] * factor);
-        pixelData[3] = (byte) (value > 255 ? 255 : value);
+        pixelData[3] = ImageHelper.clamp(value);
         
         pixelValue = ImageHelper.fromByteData(pixelData);
         
