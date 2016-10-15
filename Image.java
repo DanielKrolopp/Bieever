@@ -20,7 +20,7 @@ public class Image {
 	 * @return      Image
 	 * @see         Image
 	 */
-   public Image crop(int x1, int y1, int x2, int y2){
+   public void crop(int x1, int y1, int x2, int y2){
 	   int greaterX, lesserX, greaterY, lesserY;
 	   int[][] img2D = ImageHelper.to2DArray(this);
 	   if(x1 > x2){
@@ -43,15 +43,16 @@ public class Image {
 	   int i = 0;
 	   for(int r = 0; r < img2D.length; r++){
 		   for(int c = 0; c < img2D[0].length; c++){
-			   if(c < greaterX && c >= lesserX && r < greaterY && r >= lesserY){
+			   if(c < greaterX && c >= lesserX && r < greaterY && r >= lesserY){//Optimize this
 				   croppedPixels[i] = (img2D[r][c]);
 				   i++;
 			   }
 		   }
 	   }
-	   Image output = new Image(greaterX - lesserX, greaterY - lesserY);
-	   output.setPixels(croppedPixels);
-	   return output;
+	   this.width = greaterX - lesserX;
+	   this.height = greaterY - lesserY;
+	   //Image output = new Image(greaterX - lesserX, greaterY - lesserY);
+	   this.setPixels(croppedPixels);
    }
    
    public int getHeight(){
