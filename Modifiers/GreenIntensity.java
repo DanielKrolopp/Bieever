@@ -9,7 +9,7 @@ public class GreenIntensity extends Intensity {
         byte[] pixelData = ImageHelper.toByteData(pixel);
         
         int value = (int) (pixelData[1] * factor);
-        pixelData[2] = (byte) (value > Byte.MAX_VALUE ? Byte.MAX_VALUE : value);
+        pixelData[2] = ImageHelper.clamp(value);
         
         pixelValue = ImageHelper.fromByteData(pixelData);
         
