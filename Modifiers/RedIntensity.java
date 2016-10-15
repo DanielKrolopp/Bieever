@@ -6,12 +6,12 @@ public class RedIntensity extends Intensity {
     @Override
     protected int modifyPixel(int pixel, float factor) {
         int pixelValue;
-        byte[] pixelData = ImageProcessor.toByteData(pixel);
+        int[] pixelData = ImageHelper.toByteData(pixel);
         
         int value = (int) (pixelData[1] * factor);
-        pixelData[1] = (byte) (value > Byte.MAX_VALUE ? Byte.MAX_VALUE : value);
+        pixelData[1] = ImageHelper.clamp(value);
         
-        pixelValue = ImageProcessor.fromByteData(pixelData);
+        pixelValue = ImageHelper.fromByteData(pixelData);
         
         return pixelValue;
     }
