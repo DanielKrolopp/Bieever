@@ -5,6 +5,7 @@
 public abstract class GlobalModifier {
     public Image modify(Image img, float factor) {
         Image newImg = new Image();
+        newImg.pixels = new int[img.pixels.length];
         for (int i = 0; i < img.pixels.length; i++) {
             newImg.pixels[i] = modifyPixel(img.pixels[i], factor);
         }
