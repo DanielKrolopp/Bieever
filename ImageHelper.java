@@ -50,6 +50,11 @@ public class ImageHelper {
         return (int) (value);
     }
     
+    /**
+    * 
+    * @param img image to be converted to 2 dimension array of pixels
+    * @return array[height of image][width of image]
+    */
     public static int[][] to2DArray(Image img) {
         int[][] arr2D = new int[img.getHeight()][img.getWidth()];
         for (int y = 0; y < img.height; y++) {
@@ -60,6 +65,11 @@ public class ImageHelper {
         return arr2D;
     }
     
+    /**
+    * 
+    * @param arr2D 2 dimension array of pixel values
+    * @return 1 dimension array of pixel values starting from top left corner of image reading left to right, then top to bottom
+    */
     public static int[] from2DArray(int[][] arr2D) {
         int[] arr1D = new int[arr2D.length * arr2D[0].length];
         for (int y = 0; y < arr2D.length; y++) {
