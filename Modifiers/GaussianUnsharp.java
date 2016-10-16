@@ -7,6 +7,9 @@ public class GaussianUnsharp extends GlobalModifier {
     @Override
     public ImageK modify(ImageK img, float factor) {
         ImageK newImg = new ImageK();
+        newImg.width = img.width;
+        newImg.height = img.height;
+        
         GaussianBlur blurFilter = new GaussianBlur();
         ImageK blurNegative = blurFilter.modify(img, factor);
         
