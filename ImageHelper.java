@@ -82,13 +82,13 @@ public class ImageHelper {
         return arr1D;
     }
     
-    public Image fromBufferedImage(BufferedImage bufferedImage) {
+    public static Image fromBufferedImage(BufferedImage bufferedImage) {
         Image img = new Image(bufferedImage.getHeight(), bufferedImage.getWidth());
         img.setPixels(bufferedImage.getRGB(0, 0, img.width, img.height, null, 0, img.width * img.height));
         return img;
     }
     
-    public BufferedImage toBufferedImage(Image img) {
+    public static BufferedImage toBufferedImage(Image img) {
         BufferedImage bImg = new BufferedImage(img.width, img.height, BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < img.height; y++) {
             for (int x = 0; x < img.width; x++) {
