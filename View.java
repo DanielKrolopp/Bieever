@@ -1,14 +1,33 @@
-//Nameer Qureshi
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.io.*;
-import java.text.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
-import javax.imageio.*;
-import javax.swing.*;
-import javax.swing.table.*;
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+//Nameer Qureshi
+
 
 public class View extends JFrame implements ActionListener{
 
@@ -90,7 +109,65 @@ public class View extends JFrame implements ActionListener{
 			{
 				JSlider toAdd = new JSlider(-100, 100, 0); 
 				toAdd.setBounds(horizAlignment, vertAlignment, 200, 50);
-				//toAdd.addChangeListener(this);
+				toAdd.addChangeListener(new ChangeListener() {
+
+					@Override
+					public void stateChanged(ChangeEvent ce) {
+						
+						JSlider toCheck = (JSlider)ce.getSource();
+						
+						//if red slider is changing
+						if(toCheck.equals(sliders.get(0)))
+						{
+							GlobalModifier change = new RedIntensity();
+							imagePanel.image = ImageHelper.toBufferedImage(change.modify(ImageHelper.fromBufferedImage(imagePanel.image), (toCheck.getValue()/100)));
+						}
+						
+						//if green slider is changing
+						else if(toCheck.equals(sliders.get(1)))
+						{
+							GlobalModifier change = new GreenIntensity();
+							imagePanel.image = ImageHelper.toBufferedImage(change.modify(ImageHelper.fromBufferedImage(imagePanel.image), (toCheck.getValue())));
+						}
+						
+						//if blue slider is changing
+						else if(toCheck.equals(sliders.get(2)))
+						{
+							GlobalModifier change = new BlueIntensity();
+							imagePanel.image = ImageHelper.toBufferedImage(change.modify(ImageHelper.fromBufferedImage(imagePanel.image), (toCheck.getValue())));
+						}
+						
+						//if brightness slider is changing
+						else if(toCheck.equals(sliders.get(3)))
+						{
+							GlobalModifier change = new Brightness();
+							imagePanel.image = ImageHelper.toBufferedImage(change.modify(ImageHelper.fromBufferedImage(imagePanel.image), (toCheck.getValue())));
+						}
+						
+						//if saturation slider is changing
+						else if(toCheck.equals(sliders.get(4)))
+						{
+							GlobalModifier change = new Saturation();
+							imagePanel.image = ImageHelper.toBufferedImage(change.modify(ImageHelper.fromBufferedImage(imagePanel.image), (toCheck.getValue())));
+						}
+						
+						//if sharpness slider is changing
+						else if(toCheck.equals(sliders.get(5)))
+						{
+							GlobalModifier change = new GaussianUnsharp();
+							imagePanel.image = ImageHelper.toBufferedImage(change.modify(ImageHelper.fromBufferedImage(imagePanel.image), (toCheck.getValue())));
+						}
+						
+						//if blur slider is changing
+						else if(toCheck.equals(sliders.get(6)))
+						{
+							GlobalModifier change = new GaussianBlur();
+							imagePanel.image = ImageHelper.toBufferedImage(change.modify(ImageHelper.fromBufferedImage(imagePanel.image), toCheck.getValue()));
+						}
+						
+					}
+					
+				});
 				
 				sliders.add(toAdd);
 				toolsPanel.add(toAdd);
@@ -153,9 +230,9 @@ public class View extends JFrame implements ActionListener{
 				}
 			}
 			
-			public Image newImage(int newWidth, int newHeight)
+			public java.awt.Image newImage(int newWidth, int newHeight)
 			{
-				Image temp = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+				java.awt.Image temp = image.getScaledInstance(newWidth, newHeight, java.awt.Image.SCALE_SMOOTH);
 				BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
 				
 				Graphics2D g2d = newImage.createGraphics();
@@ -255,10 +332,19 @@ public class View extends JFrame implements ActionListener{
 				setTitle("BIE-EVER ----------- " + fileName);
 			}
 			
+			
+			
 			//user wants to save changes
 			else if(ae.getActionCommand().equals("Save"))
 			{
 				saveFile(currentFile);
+			}
+			
+			else if(ae.getActionCommand().equals("Rotate 90 degrees"))
+			{
+				GlobalModifier change = new Rotator();
+				imagePanel.image = ImageHelper.toBufferedImage(change.modify(ImageHelper.fromBufferedImage(imagePanel.image), 1));
+				
 			}
 		}
 		
