@@ -3,11 +3,11 @@ import java.awt.event.MouseListener;
 
 public class ImageCrop implements MouseListener{
 	
-	private int radius, x1, x2, y1, y2;
+	private int x1, x2, y1, y2;
 	private ImageK image;
 	private boolean clicked = false;
 	
-	public ImageCrop(ImageK image, int radius){
+	public ImageCrop(ImageK image){
 		this.radius = radius;
 		this.image = image;
 		clicked = false;
