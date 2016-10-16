@@ -15,18 +15,15 @@ public class GaussianBlur extends GlobalModifier {
     public ImageK modify(ImageK img, int stdDev) {
         if (stdDev <= 0) return img;
         
+        stdDev += 100;
+        stdDev /= 4;
         ImageK newImg = new ImageK();
         newImg.width = img.width;
         newImg.height = img.height;
         
-        int matrixSize = (int) (6 * stdDev + 0.5f);
-        double[] convMatrix = new double[matrixSize];
-        int origin = (int) (stdDev + 0.5f);
-        for (int i = 0; i < matrixSize; i++) {
-            double g = Math.pow(Math.E, - (((i - origin) * (i - origin))/ (2 * stdDev * stdDev))) 
-                    / Math.sqrt(2 * Math.PI * stdDev * stdDev);
-            convMatrix[i] = g;
-        }
+        int matrixSize = (int) (6 * stdDev + 0.5);
+        double[] convMatrix = this.generateMatrix(stdDev);
+        int origin = ((int) (stdDev * 2 + 0.5) + 1) / 2;
         
         int[] newPixels = new int[img.pixels.length];
         
@@ -50,11 +47,17 @@ public class GaussianBlur extends GlobalModifier {
             newChannels[3] = ImageHelper.clamp(bSum);
             newPixels[p] = ImageHelper.fromByteData(newChannels);
         }
+        
+        int[] tempPixels = new int[img.pixels.length];
+        for (int i = 0; i < tempPixels.length; i++) {
+            tempPixels[i] = newPixels[i];
+        }
+        
         for (int p = 0; p < img.pixels.length; p++) {
             int x = p % img.width, y = p / img.width;
             double rSum = 0, gSum = 0, bSum = 0; 
             for (int i = 0; i < matrixSize; i++) {
-                int[] channels = ImageHelper.toByteData(img.pixels[i * img.width + x]);
+                int[] channels = ImageHelper.toByteData(tempPixels[i * img.width + x]);
                 int deltaY = i - origin;
                 if (x + deltaY < 0 || x + deltaY >= img.height) {
                 } else {
@@ -75,6 +78,19 @@ public class GaussianBlur extends GlobalModifier {
         newImg.pixels = newPixels;
         
         return newImg;
+    }
+    
+    public double[] generateMatrix(double radius) {
+        int numElements = (int) (radius * 2 + 0.5) + 1;
+        double[] convMatrix = new double[numElements];
+        int origin = numElements / 2;
+        for (int i = 0; i < convMatrix.length; i++) {
+            double g = Math.pow(Math.E, - (((i - origin) * (i - origin))/ (2 * radius * radius))) 
+                    / Math.sqrt(2 * Math.PI * radius * radius);
+            convMatrix[i] = g;
+        }
+        
+        return convMatrix;
     }
     
     @Override
