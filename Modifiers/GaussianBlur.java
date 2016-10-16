@@ -12,7 +12,7 @@ public class GaussianBlur extends GlobalModifier {
      * @return modified Image object
      */
     @Override
-    public ImageK modify(Image img, float stdDev) {
+    public ImageK modify(Image img, int stdDev) {
         
         ImageK newImg = new ImageK();
         newImg.width = img.width;
@@ -77,7 +77,7 @@ public class GaussianBlur extends GlobalModifier {
     }
     
     @Override
-    protected int modifyPixel(int pixel, float factor) {
+    protected int modifyPixel(int pixel, int factor) {
         System.out.println("Bug in GaussianBlur function tee hee :P");
         return 0;
     }
