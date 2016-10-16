@@ -6,6 +6,8 @@ public class GaussianUnsharp extends GlobalModifier {
     
     @Override
     public ImageK modify(ImageK img, int factor) {
+        if (factor <= 0) return img;
+        
         ImageK newImg = new ImageK();
         newImg.width = img.width;
         newImg.height = img.height;
