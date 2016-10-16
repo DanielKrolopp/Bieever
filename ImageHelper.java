@@ -57,7 +57,7 @@ public class ImageHelper {
     * @param img image to be converted to 2 dimension array of pixels
     * @return array[height of image][width of image]
     */
-    public static int[][] to2DArray(Image img) {
+    public static int[][] to2DArray(ImageK img) {
         int[][] arr2D = new int[img.getHeight()][img.getWidth()];
         for (int y = 0; y < img.height; y++) {
             for (int x = 0; x < img.width; x++) {
@@ -93,7 +93,7 @@ public class ImageHelper {
         return img;
     }
     
-    public static BufferedImage toBufferedImage(Image img) {
+    public static BufferedImage toBufferedImage(ImageK img) {
         BufferedImage bImg = new BufferedImage(img.width, img.height, BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < img.height; y++) {
             for (int x = 0; x < img.width; x++) {
