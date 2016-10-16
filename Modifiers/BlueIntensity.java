@@ -9,7 +9,7 @@ public class BlueIntensity extends Intensity {
     * @param factor value that the pixel's blue channel is multiplied by. factor E [0, 1]
     */
     @Override
-    protected int modifyPixel(int pixel, float factor) {
+    protected int modifyPixel(int pixel, int factor) {
         double multiplier = Math.pow(Math.E, factor);
         int pixelValue;
         int[] pixelData = ImageHelper.toByteData(pixel);
