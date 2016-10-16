@@ -4,17 +4,23 @@ import java.util.ArrayList;
  *
  * @author Kevin
  */
-public class ImageModifications {
+public enum ImageModifications {
+    INSTANCE;
     private class Modification {
         String type;
         int factor;
     }
+    
+    private ImageModifications(){}
     
     private ImageK baseImage;
     private final ArrayList<Modification> modifications = new ArrayList<>();
     
     public int[] factors;
     
+    public static ImageModifications getInstance() {
+        return INSTANCE;
+    }
     
     public ImageK getBaseImage() { return this.baseImage; }
     public void setBaseImage(ImageK baseImage) { this.baseImage = baseImage; }
