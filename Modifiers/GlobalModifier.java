@@ -3,7 +3,7 @@
  * @author Kevin
  */
 public abstract class GlobalModifier {
-    public ImageK modify(ImageK img, float factor) {
+    public ImageK modify(ImageK img, int factor) {
         ImageK newImg = new ImageK();
         newImg.width = img.width;
         newImg.height = img.height;
@@ -14,5 +14,5 @@ public abstract class GlobalModifier {
         return newImg;
     }
     
-    protected abstract int modifyPixel(int pixel, float factor);
+    protected abstract int modifyPixel(int pixel, int factor);
 }
