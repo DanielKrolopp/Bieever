@@ -4,12 +4,12 @@ import java.util.Arrays;
 *
 * @author Kevin
 */
-public class Image {
+public class ImageK {
 	public int height, width;
 	public int[] pixels;
 	
-    public Image(){}
-    public Image(int h, int w) {
+    public ImageK(){}
+    public ImageK(int h, int w) {
        this.height = h;
        this.width = w;
    }
@@ -24,7 +24,7 @@ public class Image {
 	 * @param		y1  y-coordinate of an opposing corner
 	 * @param		y2  y-coordinate of an opposing corner
 	 * 
-	 * @see         Image
+	 * @see         ImageK
 	 */
    public void crop(int x1, int y1, int x2, int y2){
 	   int greaterX, lesserX, greaterY, lesserY;
