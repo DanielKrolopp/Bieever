@@ -4,7 +4,7 @@
  */
 public class Intensity extends GlobalModifier {
     @Override
-    protected int modifyPixel(int pixel, float factor) {
+    protected int modifyPixel(int pixel, int factor) {
         double multiplier = Math.pow(Math.E, factor);
         int pixelValue;
         int[] pixelData = ImageHelper.toByteData(pixel);
