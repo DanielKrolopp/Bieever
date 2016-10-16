@@ -15,6 +15,8 @@ public class GaussianBlur extends GlobalModifier {
     public ImageK modify(Image img, float stdDev) {
         
         ImageK newImg = new ImageK();
+        newImg.width = img.width;
+        newImg.height = img.height;
         
         int matrixSize = (int) (6 * stdDev + 0.5f);
         double[] convMatrix = new double[matrixSize];
