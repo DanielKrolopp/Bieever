@@ -8,7 +8,6 @@ public class ImageCrop implements MouseListener{
 	private boolean clicked = false;
 	
 	public ImageCrop(ImageK image){
-		this.radius = radius;
 		this.image = image;
 		clicked = false;
 	}
