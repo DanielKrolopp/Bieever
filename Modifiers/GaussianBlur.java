@@ -12,7 +12,8 @@ public class GaussianBlur extends GlobalModifier {
      * @return modified Image object
      */
     @Override
-    public ImageK modify(Image img, int stdDev) {
+    public ImageK modify(ImageK img, int stdDev) {
+        if (stdDev <= 0) return img;
         
         ImageK newImg = new ImageK();
         newImg.width = img.width;
