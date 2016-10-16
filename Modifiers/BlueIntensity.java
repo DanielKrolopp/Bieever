@@ -10,10 +10,11 @@ public class BlueIntensity extends Intensity {
     */
     @Override
     protected int modifyPixel(int pixel, float factor) {
+        double multiplier = Math.pow(Math.E, factor);
         int pixelValue;
         int[] pixelData = ImageHelper.toByteData(pixel);
         
-        int value = (int) (pixelData[3] * factor);
+        int value = (int) (pixelData[3] * multiplier);
         pixelData[3] = ImageHelper.clamp(value);
         
         pixelValue = ImageHelper.fromByteData(pixelData);
