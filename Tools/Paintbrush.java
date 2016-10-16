@@ -33,11 +33,7 @@ public class Paintbrush implements MouseListener{
 		x = e.getX();
 		y = e.getY();
 		int[][] image2D = ImageHelper.to2DArray(image);
-		for(int r = x - (radius/2); r < x + (radius/2); r++){
-			for(int c = y - (radius/2); c < y + radius/2; c++){
-				image2D[r][c] = 0;
-			}
-		}
+		image2D[x][y] = 0;
 		image.setPixels(ImageHelper.from2DArray(image2D));
 	}
 
