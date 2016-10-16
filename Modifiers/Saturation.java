@@ -11,7 +11,7 @@ public class Saturation extends GlobalModifier {
      * @return 
      */
     @Override
-    protected int modifyPixel(int pixel, float factor) {
+    protected int modifyPixel(int pixel, int factor) {
         int[] argb = ImageHelper.toByteData(pixel);
         double[] hsv = ImageHelper.toHSV(argb);
         hsv[1] = factor;
