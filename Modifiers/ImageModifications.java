@@ -10,10 +10,14 @@ public class ImageModifications {
         int factor;
     }
     
-    public ImageK baseImage;
+    private ImageK baseImage;
     private final ArrayList<Modification> modifications = new ArrayList<>();
     
     public int[] factors;
+    
+    
+    public ImageK getBaseImage() { return this.baseImage; }
+    public void setBaseImage(ImageK baseImage) { this.baseImage = baseImage; }
     
     public ImageK modifiedImage() {
         
