@@ -16,25 +16,24 @@ public class GaussianBlur extends GlobalModifier {
         if (stdDev <= 0) return img;
         
         stdDev += 100;
-        stdDev /= 4;
+        stdDev /= 20;
         ImageK newImg = new ImageK();
         newImg.width = img.width;
         newImg.height = img.height;
         
-        int matrixSize = (int) (6 * stdDev + 0.5);
-        double[] convMatrix = this.generateMatrix(stdDev);
-        int origin = ((int) (stdDev * 2 + 0.5) + 1) / 2;
+        double[] convMatrix = this.generateMatrix(6.0 * stdDev);
+        int origin = convMatrix.length / 2;
         
         int[] newPixels = new int[img.pixels.length];
         
         for (int p = 0; p < img.pixels.length; p++) {
             int x = p % img.width, y = p / img.width;
             double rSum = 0, gSum = 0, bSum = 0; 
-            for (int i = 0; i < matrixSize; i++) {
-                int[] channels = ImageHelper.toByteData(img.pixels[img.width * y + i]);
+            for (int i = 0; i < convMatrix.length; i++) {
                 int deltaX = i - origin;
                 if (x + deltaX < 0 || x + deltaX >= img.width) {
                 } else {
+                    int[] channels = ImageHelper.toByteData(img.pixels[img.width * y + x + deltaX]);
                     rSum += channels[1] * convMatrix[i];
                     gSum += channels[2] * convMatrix[i];
                     bSum += channels[3] * convMatrix[i];
@@ -49,18 +48,17 @@ public class GaussianBlur extends GlobalModifier {
         }
         
         int[] tempPixels = new int[img.pixels.length];
-        for (int i = 0; i < tempPixels.length; i++) {
-            tempPixels[i] = newPixels[i];
-        }
+        System.arraycopy(newPixels, 0, tempPixels, 0, tempPixels.length);
         
         for (int p = 0; p < img.pixels.length; p++) {
             int x = p % img.width, y = p / img.width;
             double rSum = 0, gSum = 0, bSum = 0; 
-            for (int i = 0; i < matrixSize; i++) {
-                int[] channels = ImageHelper.toByteData(tempPixels[i * img.width + x]);
+            for (int i = 0; i < convMatrix.length; i++) {
                 int deltaY = i - origin;
+                
                 if (x + deltaY < 0 || x + deltaY >= img.height) {
                 } else {
+                    int[] channels = ImageHelper.toByteData(tempPixels[(y + deltaY) * img.width + x]);
                     rSum += channels[1] * convMatrix[i];
                     gSum += channels[2] * convMatrix[i];
                     bSum += channels[3] * convMatrix[i];
